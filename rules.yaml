@@ -1,0 +1,87 @@
+# ============================================================
+# Clash Verge Rev —— 全局「编辑规则」覆写（对所有订阅生效）
+# 装载位置：设置 → 覆写 → 编辑规则（全局），对应 profiles/<uid>.yaml
+# 规则顺序：本文件 prepend 的规则排在订阅自带规则之前（优先级更高）。
+# 写法："类型,值,策略组"；类型：DOMAIN / DOMAIN-SUFFIX / DOMAIN-KEYWORD / IP-CIDR / GEOSITE / GEOIP
+# ============================================================
+prepend:
+  # ── 走 🚀节点选择（= QX 里的「🚀节点选择」）──
+  - DOMAIN-SUFFIX,bgm.tv,🚀节点选择
+  - DOMAIN-SUFFIX,bakamh.com,🚀节点选择
+  - DOMAIN-SUFFIX,stripe.com,🚀节点选择
+  - DOMAIN-SUFFIX,ldstatic.com,🚀节点选择
+  - DOMAIN-SUFFIX,challenges.cloudflare.com,🚀节点选择
+  - DOMAIN-SUFFIX,100xlabs.space,🚀节点选择
+  - DOMAIN-SUFFIX,arena.ai,🚀节点选择
+  - DOMAIN-SUFFIX,gorouter.app,🚀节点选择
+  - DOMAIN-SUFFIX,tabitoken.com,🚀节点选择
+  - DOMAIN-SUFFIX,linux.do,🚀节点选择
+  - DOMAIN-SUFFIX,api.shuaiapi.com,🚀节点选择
+  - DOMAIN-SUFFIX,kktoken.cc,🚀节点选择
+  - DOMAIN-SUFFIX,mangacopy.com,🚀节点选择
+  - DOMAIN-SUFFIX,abrdns.com,🚀节点选择
+  - DOMAIN-SUFFIX,tokenfly.shop,🚀节点选择
+  - DOMAIN-SUFFIX,agentrouter.org,🚀节点选择
+  - DOMAIN-SUFFIX,manus.im,🚀节点选择
+  - DOMAIN-SUFFIX,cun.ai,🚀节点选择
+  - DOMAIN-SUFFIX,simpanda.cc,🚀节点选择
+  - DOMAIN-SUFFIX,vercel.com,🚀节点选择
+  - DOMAIN-SUFFIX,anyrouter.top,🚀节点选择
+  - DOMAIN-SUFFIX,brober.xyz,🚀节点选择
+  - DOMAIN-SUFFIX,groq.com,🚀节点选择
+  - DOMAIN-SUFFIX,lovable.dev,🚀节点选择
+  - DOMAIN-SUFFIX,vidu.com,🚀节点选择
+  - DOMAIN-SUFFIX,ald.emby.moe,🚀节点选择
+  - DOMAIN-SUFFIX,emby.younoyes.com,🚀节点选择
+  - DOMAIN-SUFFIX,emby.yusen.us.ci,🚀节点选择
+  - DOMAIN-SUFFIX,link00.okemby.org,🚀节点选择
+  # QX 里被禁用的两条（行首 -），要用就取消注释
+  # - DOMAIN-SUFFIX,bitrefill.com,🚀节点选择
+  # - DOMAIN-SUFFIX,ai.071129.xyz,DIRECT
+
+  # ── 香港节点（没有香港节点时该组自动退回 🚀节点选择，由 Script.js 维护）──
+  - DOMAIN-SUFFIX,polymarket.com,香港节点
+
+  # ── 直连（= QX 里的 direct）──
+  - DOMAIN-SUFFIX,air-outer.com,DIRECT
+  - DOMAIN-SUFFIX,argotunnel.com,DIRECT
+  - DOMAIN-SUFFIX,onlybas.com,DIRECT
+  - DOMAIN-SUFFIX,oyunfor.com,DIRECT
+  - DOMAIN-SUFFIX,bangumi.ca,DIRECT
+  - DOMAIN-KEYWORD,makima.online,DIRECT
+  - DOMAIN-SUFFIX,012294.xyz,DIRECT
+  - DOMAIN-KEYWORD,alipay,DIRECT
+  - DOMAIN-SUFFIX,ad.12306.cn,DIRECT
+  - DOMAIN-SUFFIX,sdkapp.uve.weibo.com,DIRECT
+  - DOMAIN-SUFFIX,chatbox.com,DIRECT
+  - DOMAIN-SUFFIX,chatboxapi.com,DIRECT
+  - DOMAIN-SUFFIX,chatboxcdn.com,DIRECT
+
+  # ── 全球加速（= QX 里的「全球加速」）──
+  - DOMAIN-SUFFIX,capcut.com,🌍 全球加速
+  - DOMAIN-SUFFIX,pinterest.com,🌍 全球加速
+  - DOMAIN-KEYWORD,hanmei1,🌍 全球加速
+
+  # ── AI / 大模型：指向 🤖 AI服务（该组默认也走 🚀节点选择，效果与 QX 一致；
+  #    想直接走节点，把组名换成 🚀节点选择 即可）──
+  - DOMAIN-SUFFIX,openai.com,🤖 AI服务
+  - DOMAIN-SUFFIX,chatgpt.com,🤖 AI服务
+  - DOMAIN-SUFFIX,anthropic.com,🤖 AI服务
+  - DOMAIN-SUFFIX,claude.ai,🤖 AI服务
+  - DOMAIN-SUFFIX,perplexity.ai,🤖 AI服务
+  - DOMAIN-SUFFIX,x.ai,🤖 AI服务
+  - DOMAIN-SUFFIX,mistral.ai,🤖 AI服务
+  - DOMAIN-SUFFIX,aistudio.google.com,🤖 AI服务
+  - DOMAIN-SUFFIX,gemini.google.com,🤖 AI服务
+
+  # ── 本地网段直连 ──
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,224.0.0.0/24,DIRECT,no-resolve
+  - IP-CIDR,182.254.116.0/24,DIRECT,no-resolve
+
+append: []
+
+delete: []

@@ -1,0 +1,4 @@
+# Clash Verge Rev —— 全局扩展配置（覆写）：只放"设置类"字段
+# 说明：扩展配置里写 rules 是「整体替换」，会把订阅自带规则清空，所以规则一律放 rules.yaml。
+profile:
+  store-selected: true
