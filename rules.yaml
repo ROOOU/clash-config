@@ -35,6 +35,13 @@ prepend:
   - DOMAIN-SUFFIX,emby.younoyes.com,🚀节点选择
   - DOMAIN-SUFFIX,emby.yusen.us.ci,🚀节点选择
   - DOMAIN-SUFFIX,link00.okemby.org,🚀节点选择
+  # 012294.xyz 上的 Web 应用：A1 机子 + CF 隧道，国内直连到 CF 边缘极慢（实测 5~10KB/s、TTFB 2~9s），
+  # 走节点后 60Mbps、TTFB ~1s。基础设施（cf/node/sub）仍保持直连，见下方「直连」段。
+  - DOMAIN-SUFFIX,mtv.012294.xyz,🚀节点选择
+  - DOMAIN-SUFFIX,ob.012294.xyz,🚀节点选择
+  - DOMAIN-SUFFIX,komari.012294.xyz,🚀节点选择
+  - DOMAIN-SUFFIX,status.012294.xyz,🚀节点选择
+  - DOMAIN-SUFFIX,s2a.012294.xyz,🚀节点选择
   # QX 里被禁用的两条（行首 -），要用就取消注释
   # - DOMAIN-SUFFIX,bitrefill.com,🚀节点选择
   # - DOMAIN-SUFFIX,ai.071129.xyz,DIRECT
@@ -49,7 +56,10 @@ prepend:
   - DOMAIN-SUFFIX,oyunfor.com,DIRECT
   - DOMAIN-SUFFIX,bangumi.ca,DIRECT
   - DOMAIN-KEYWORD,makima.online,DIRECT
-  - DOMAIN-SUFFIX,012294.xyz,DIRECT
+  # 012294.xyz 的基础设施必须直连（换 IP 后取订阅、节点域名解析不能绕节点）
+  - DOMAIN-SUFFIX,cf.012294.xyz,DIRECT
+  - DOMAIN-SUFFIX,node.012294.xyz,DIRECT
+  - DOMAIN-SUFFIX,sub.012294.xyz,DIRECT
   - DOMAIN-KEYWORD,alipay,DIRECT
   - DOMAIN-SUFFIX,ad.12306.cn,DIRECT
   - DOMAIN-SUFFIX,sdkapp.uve.weibo.com,DIRECT

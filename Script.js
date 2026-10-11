@@ -9,6 +9,12 @@
 // ============================================================
 
 // 需要的策略组：["组名", [候选(第一个是默认)], 类型]；"AUTO" = 当前订阅的全部节点
+
+// ── 自定义上网规则（由 install.sh 从 rules.yaml 自动生成，勿手改；
+//    放在脚本里是为了「换任何订阅都生效」——rules.yaml 那个「编辑规则」文件其实是订阅级的）──
+// >>> AUTO-RULES-START
+var MY_RULES = [];
+// <<< AUTO-RULES-END
 var MY_GROUPS = [
   ["🚀节点选择", ["AUTO"], "select"],
   ["📨 Telegram", ["🚀节点选择", "DIRECT"], "select"],
@@ -136,7 +142,11 @@ function main(config, profileName) {
   var existing = {};
   rules.forEach(function (r) { existing[r] = true; });
   var toAdd = MY_PROVIDER_RULES.filter(function (r) { return !existing[r]; });
-  config.rules = toAdd.concat(rules);
+  // 自定义规则优先级最高：排在规则集规则之前
+  var custom = (typeof MY_RULES !== "undefined" ? MY_RULES : []).filter(function (r) {
+    return r && !existing[r];
+  });
+  config.rules = custom.concat(toAdd).concat(rules);
   config.rules.push(finalMatch || "MATCH,🐟 漏网之鱼");
 
   return config;

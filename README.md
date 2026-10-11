@@ -6,9 +6,16 @@
 
 | 文件 | 装到哪 | 作用 |
 |---|---|---|
-| `Script.js` | 全局扩展脚本（`profiles/Script.js`） | 只管结构：自动补齐策略组（🚀节点选择/📨 Telegram/🤖 AI服务/…）、补齐 13 个 rule-providers 及配套规则、兜底 `MATCH` 永远最后、香港节点组没香港节点时退回 🚀节点选择 |
-| `rules.yaml` | 全局「编辑规则」（`profiles/<uid>.yaml`，`prepend/append/delete`） | 我自己的上网规则（从 Quantumult X 的 `[filter_local]` 1:1 转换而来），可视化可编辑 |
-| `Merge.yaml` | 全局扩展配置（`profiles/Merge.yaml`） | 只放设置类字段（`profile.store-selected`）。**注意：扩展配置里写 `rules` 是整体替换，会清空订阅规则，所以规则一律放 `rules.yaml`** |
+| `Script.js` | 全局扩展脚本（`profiles/Script.js`） | 只管结构：自动补齐策略组（🚀节点选择/📨 Telegram/🤖 AI服务/…）、补齐 13 个 rule-providers 及配套规则、把 `rules.yaml` 的自定义规则**注入成 MY_RULES 并插在最前**、兜底 `MATCH` 永远最后、香港节点组没香港节点时退回 🚀节点选择 |
+| `rules.yaml` | 每个订阅的「编辑规则」文件（`profiles/<uid>.yaml`，`prepend/append/delete`） | 自定义规则的**唯一来源**（从 Quantumult X 的 `[filter_local]` 1:1 转换而来），可视化管理；`install.sh` 会把它同步进 `Script.js` |
+| `Merge.yaml` | 全局扩展配置（`profiles/Merge.yaml`） | 只放设置类字段（`profile.store-selected`）。**注意：扩展配置里写 `rules` 是整体替换，会清空订阅规则** |
+
+### ⚠️ 踩过的坑：`rules` 类型的「编辑规则」文件是**订阅级**的
+
+`profiles.yaml` 里只有 uid 为 `Merge` / `Script` 的两个文件是全局的；「编辑规则」（`type: rules`）
+每个订阅各自一份（`option.rules: <uid>`）。所以**换订阅后 rules.yaml 那套规则会失效**。
+现在由 `install.sh` 把 `rules.yaml` 生成到 `Script.js` 的 `MY_RULES` 里（全局脚本对每个订阅都跑），
+换订阅也照样生效；同时仍然把内容写进各订阅的「编辑规则」文件，方便在界面里看/改。
 
 执行顺序（官方）：
 `订阅原文 → 应用设置 → 全局扩展配置 → 全局扩展脚本 → 订阅扩展配置 → 订阅扩展脚本 → 应用设置回写`
@@ -43,3 +50,24 @@ Clash Verge 的「编辑规则」界面改（写完记得回来同步到本仓�
 - Linux：`~/.local/share/io.github.clash-verge-rev.clash-verge-rev`（或 `~/.config/...`）
 - Windows：把三个文件分别覆盖到 `%APPDATA%\io.github.clash-verge-rev.clash-verge-rev\profiles\`
   下的同名文件（脚本用 `Script.js`，合并用 `Merge.yaml`，规则用「编辑规则」界面的文件）
+
+## macOS 注意：Quantumult X 与 Clash Verge 不能同时开
+
+两者都用 TUN 抢路由，谁后开谁接管（实测 QX 的 Tunnel 开着时，Clash Verge 即使界面显示运行中，
+核心 `/connections` 也是 0 流量——改 Clash 规则对本机上网完全没有影响）。
+
+判断谁在接管本机流量：
+
+```bash
+# 1) Clash 核心是不是在干活（0 字节 = 空转）
+curl -s --unix-socket /var/run/clash-verge-service/users/501/verge-mihomo.sock \
+     http://localhost/connections
+# 2) 系统 DNS 是不是 198.19.0.3（QX 的 TUN 地址段，Clash 是 198.18.x）
+scutil --dns | grep nameserver
+```
+
+要用 Clash Verge：退出 Quantumult X，然后打开 Clash 的 TUN 模式（或系统代理）。
+要用 QX：把同样的规则加进 QX 的 `[filter_local]`（`host-suffix, x, 🚀节点选择`），
+QX 配置文件在 `~/Library/Group Containers/group.com.crossutility.quantumult-x/Documents/configuration/default.conf`，
+改完要在 App 里重载配置才生效。
+
