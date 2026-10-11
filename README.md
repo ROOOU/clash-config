@@ -67,7 +67,15 @@ scutil --dns | grep nameserver
 ```
 
 要用 Clash Verge：退出 Quantumult X，然后打开 Clash 的 TUN 模式（或系统代理）。
-要用 QX：把同样的规则加进 QX 的 `[filter_local]`（`host-suffix, x, 🚀节点选择`），
-QX 配置文件在 `~/Library/Group Containers/group.com.crossutility.quantumult-x/Documents/configuration/default.conf`，
-改完要在 App 里重载配置才生效。
+要用 QX：把同样的规则加进 QX 的 `[filter_local]`（`host-suffix, x, 🚀节点选择`）。
+⚠️ **QX 的配置别去改 `~/Library/Group Containers/group.com.crossutility.quantumult-x/Documents/configuration/default.conf`**——
+那是 QX 启动时从主配置导出的副本，你改了下次启动就被覆盖。真正的配置在 iCloud 里：
+
+```
+~/Library/Mobile Documents/iCloud~com~crossutility~quantumult-x/Documents/Profiles/Mac-<随机>.conf
+```
+
+要离线改：先完全退出 QX（`osascript -e 'quit app "Quantumult X"'` + `pkill -f "Quantumult X Tunnel"`），
+再改这个文件，然后 `open -a "Quantumult X"`；启动后 `grep` 确认规则还在（没被覆盖）即生效。
+也可以在 QX 界面里改（配置文件 → 编辑 → 保存）。
 
