@@ -37,6 +37,7 @@ prepend:
   - DOMAIN-SUFFIX,link00.okemby.org,🚀节点选择
   # 012294.xyz 上的 Web 应用：A1 机子 + CF 隧道，国内直连到 CF 边缘极慢（实测 5~10KB/s、TTFB 2~9s），
   # 走节点后 60Mbps、TTFB ~1s。基础设施（cf/node/sub）仍保持直连，见下方「直连」段。
+  - DOMAIN-SUFFIX,piktv.012294.xyz,🚀节点选择
   - DOMAIN-SUFFIX,mtv.012294.xyz,🚀节点选择
   - DOMAIN-SUFFIX,ob.012294.xyz,🚀节点选择
   - DOMAIN-SUFFIX,komari.012294.xyz,🚀节点选择
